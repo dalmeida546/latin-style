@@ -1,0 +1,148 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(18, 18, 18, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  animation: fadeIn 400ms ease;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  gap: var(--space-lg);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.logoAccent {
+  color: var(--color-accent);
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navLink {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+
+.navLink:hover {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.menuBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+}
+
+.menuBar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 1px;
+  transition: background var(--transition);
+}
+
+.menuBtn:hover .menuBar {
+  background: var(--color-accent);
+}
+
+.cartLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+
+.cartLink:hover {
+  color: var(--color-accent);
+}
+
+.cartCount {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 20px;
+  text-align: center;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-radius: 10px;
+}
+
+.mobileNav {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  animation: fadeIn 200ms ease;
+}
+
+.mobileNavInner {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) 0 var(--space-md);
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 var(--space-xs);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  transition: color var(--transition);
+}
+
+.mobileLink:last-child {
+  border-bottom: none;
+}
+
+.mobileLink:hover {
+  color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+
+  .menuBtn {
+    display: none;
+  }
+}

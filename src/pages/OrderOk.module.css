@@ -1,0 +1,52 @@
+.page {
+  padding: var(--space-lg) 0 var(--space-4xl);
+}
+
+.content {
+  max-width: 480px;
+  margin: var(--space-3xl) auto 0;
+  text-align: center;
+  animation: fadeUp 500ms ease;
+}
+
+.icon {
+  color: var(--color-accent);
+  margin-bottom: var(--space-xl);
+  animation: fadeIn 600ms ease 200ms both;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  margin-bottom: var(--space-md);
+}
+
+.message {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.orderId {
+  font-size: 1rem;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.orderId strong {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--color-steel);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+.cta {
+  min-width: 220px;
+}

@@ -1,0 +1,61 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 500ms ease both;
+}
+
+.imageLink {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--color-bg-soft);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.imageLink:hover .image {
+  transform: scale(1.04);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+}
+
+.category {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+}
+
+.name h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  transition: color var(--transition);
+}
+
+.name:hover h3 {
+  color: var(--color-accent);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.addBtn {
+  font-size: 0.9rem;
+  min-height: 48px;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>LatinStyle</title>
+    <script>
+      ;(function () {
+        var segment = 1
+        var base = '/latin-style/'
+        var l = window.location
+        l.replace(
+          l.protocol +
+            '//' +
+            l.hostname +
+            (l.port ? ':' + l.port : '') +
+            base +
+            l.pathname
+              .split('/')
+              .slice(segment + 1)
+              .join('/') +
+            l.search +
+            l.hash,
+        )
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>

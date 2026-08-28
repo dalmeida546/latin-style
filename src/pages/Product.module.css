@@ -1,0 +1,132 @@
+.page {
+  padding: var(--space-lg) 0 var(--space-3xl);
+  animation: fadeUp 400ms ease;
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-2xl);
+  margin-top: var(--space-xl);
+}
+
+.imageWrap {
+  overflow: hidden;
+  background: var(--color-bg-soft);
+  aspect-ratio: 4 / 5;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.category {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+}
+
+.name {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.sizesLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.sizeOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.sizeBtn {
+  min-width: 52px;
+  min-height: 48px;
+  padding: 0 var(--space-md);
+  font-weight: 700;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    color var(--transition);
+}
+
+.sizeBtn:hover {
+  border-color: var(--color-accent);
+}
+
+.sizeActive {
+  border-color: var(--color-accent);
+  background: rgba(200, 245, 66, 0.12);
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.addBtn {
+  min-height: 56px;
+  font-size: 1.05rem;
+}
+
+.back {
+  margin-top: var(--space-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+
+.back:hover {
+  color: var(--color-accent);
+}
+
+.notFound {
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: var(--space-3xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
