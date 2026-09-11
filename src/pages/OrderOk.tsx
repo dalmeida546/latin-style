@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckoutSteps } from '../components/CheckoutSteps'
+import { useLocale } from '../context/LocaleContext'
 import { generateOrderId } from '../utils/format'
 import styles from './OrderOk.module.css'
 
@@ -8,9 +9,11 @@ interface OrderData {
   name: string
   phone: string
   city: string
+  country: string
 }
 
 export function OrderOk() {
+  const { t } = useLocale()
   const [orderId, setOrderId] = useState('')
   const [customer, setCustomer] = useState<OrderData | null>(null)
 
@@ -22,8 +25,7 @@ export function OrderOk() {
       sessionStorage.removeItem('latinstyle-checkout-data')
     }
 
-    const id = generateOrderId()
-    setOrderId(id)
+    setOrderId(generateOrderId())
   }, [])
 
   return (
@@ -44,25 +46,24 @@ export function OrderOk() {
           </svg>
         </div>
 
-        <h1 className={styles.title}>¡Pedido confirmado!</h1>
+        <h1 className={styles.title}>{t.order.title}</h1>
         <p className={styles.message}>
-          Gracias{customer?.name ? `, ${customer.name}` : ''}. Tu pedido fue
-          registrado correctamente.
+          {t.order.thanks}
+          {customer?.name ? `, ${customer.name}` : ''}. {t.order.registered}
         </p>
 
         {orderId && (
           <p className={styles.orderId}>
-            Número de pedido: <strong>{orderId}</strong>
+            {t.order.orderId}: <strong>{orderId}</strong>
           </p>
         )}
 
         <p className={styles.note}>
-          Te contactaremos al teléfono que indicaste para coordinar la entrega.
-          Recuerda: este es un checkout de demostración.
+          {t.order.note} {t.order.demo}
         </p>
 
         <Link to="/tienda" className={`btn btn-primary ${styles.cta}`}>
-          Seguir comprando
+          {t.order.continue}
         </Link>
       </div>
     </div>

@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom'
+import { categories } from '../data/categories'
+import { getCategoryLabel } from '../i18n/categories'
+import { useLocale } from '../context/LocaleContext'
 import styles from './Footer.module.css'
 
 export function Footer() {
+  const { t, locale } = useLocale()
+
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
@@ -9,23 +14,20 @@ export function Footer() {
           <p className={styles.logo}>
             Latin<span>Style</span>
           </p>
-          <p className={styles.tagline}>
-            Accesorios urbanos con actitud latina.
-          </p>
+          <p className={styles.tagline}>{t.footer.tagline}</p>
         </div>
 
         <nav className={styles.links} aria-label="Pie de página">
-          <Link to="/tienda">Tienda</Link>
-          <Link to="/tienda/relojes">Relojes</Link>
-          <Link to="/tienda/gafas">Gafas</Link>
-          <Link to="/tienda/carteras">Carteras</Link>
-          <Link to="/tienda/correas">Correas</Link>
-          <Link to="/tienda/ropa-urbana">Ropa urbana</Link>
+          <Link to="/tienda">{t.nav.shop}</Link>
+          {categories.map((cat) => (
+            <Link key={cat.id} to={`/tienda/${cat.id}`}>
+              {getCategoryLabel(cat.id, locale)}
+            </Link>
+          ))}
         </nav>
 
         <p className={styles.copy}>
-          &copy; {new Date().getFullYear()} LatinStyle. Todos los derechos
-          reservados.
+          &copy; {new Date().getFullYear()} LatinStyle. {t.footer.rights}
         </p>
       </div>
     </footer>

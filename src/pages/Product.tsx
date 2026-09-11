@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { CheckoutSteps } from '../components/CheckoutSteps'
-import { categoryLabels } from '../data/categories'
+import { getCategoryLabel } from '../i18n/categories'
+import {
+  getProductDescription,
+  getProductName,
+} from '../i18n/products'
 import { getProductById } from '../data/products'
 import { useCart } from '../context/CartContext'
+import { useLocale } from '../context/LocaleContext'
 import { formatPrice } from '../utils/format'
 import styles from './Product.module.css'
 
@@ -11,6 +16,7 @@ export function Product() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addItem } = useCart()
+  const { t, locale, currency } = useLocale()
   const product = id ? getProductById(id) : undefined
 
   const [selectedSize, setSelectedSize] = useState<string | undefined>(
@@ -21,13 +27,20 @@ export function Product() {
   if (!product) {
     return (
       <div className={`container ${styles.page}`}>
-        <p className={styles.notFound}>Producto no encontrado.</p>
+        <p className={styles.notFound}>{t.product.notFound}</p>
         <Link to="/tienda" className="btn btn-primary">
-          Volver a la tienda
+          {t.product.backShop}
         </Link>
       </div>
     )
   }
+
+  const name = getProductName(product.id, locale, product.name)
+  const description = getProductDescription(
+    product.id,
+    locale,
+    product.description,
+  )
 
   const handleAdd = () => {
     if (product.sizes && !selectedSize) return
@@ -48,25 +61,23 @@ export function Product() {
 
       <div className={styles.layout}>
         <div className={styles.imageWrap}>
-          <img
-            src={product.image}
-            alt={product.name}
-            className={styles.image}
-          />
+          <img src={product.image} alt={name} className={styles.image} />
         </div>
 
         <div className={styles.info}>
           <span className={styles.category}>
-            {categoryLabels[product.category]}
+            {getCategoryLabel(product.category, locale)}
           </span>
-          <h1 className={styles.name}>{product.name}</h1>
-          <p className={styles.price}>{formatPrice(product.price)}</p>
-          <p className={styles.description}>{product.description}</p>
+          <h1 className={styles.name}>{name}</h1>
+          <p className={styles.price}>
+            {formatPrice(product.priceUsd, currency, locale)}
+          </p>
+          <p className={styles.description}>{description}</p>
 
           {product.sizes && (
             <div className={styles.sizes}>
               <label htmlFor="size-select" className={styles.sizesLabel}>
-                Talla
+                {t.product.size}
               </label>
               <div className={styles.sizeOptions} id="size-select">
                 {product.sizes.map((size) => (
@@ -90,19 +101,19 @@ export function Product() {
               className={`btn btn-primary btn-full ${styles.addBtn}`}
               onClick={handleAdd}
             >
-              {added ? '¡Añadido!' : 'Añadir al carrito'}
+              {added ? t.product.added : t.product.add}
             </button>
             <button
               type="button"
-              className={`btn btn-secondary btn-full`}
+              className="btn btn-secondary btn-full"
               onClick={handleBuyNow}
             >
-              Comprar ahora
+              {t.product.buyNow}
             </button>
           </div>
 
           <Link to="/tienda" className={styles.back}>
-            &larr; Seguir comprando
+            &larr; {t.product.back}
           </Link>
         </div>
       </div>

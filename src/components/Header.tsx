@@ -1,17 +1,24 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { categories } from '../data/categories'
+import { getCategoryLabel } from '../i18n/categories'
 import { useCart } from '../context/CartContext'
+import { useLocale } from '../context/LocaleContext'
+import { LocaleSwitcher } from './LocaleSwitcher'
 import styles from './Header.module.css'
-
-const mobileLinks = [
-  { to: '/tienda', label: 'Toda la tienda' },
-  ...categories.map((c) => ({ to: `/tienda/${c.id}`, label: c.label })),
-]
 
 export function Header() {
   const { itemCount } = useCart()
+  const { t, locale } = useLocale()
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const mobileLinks = [
+    { to: '/tienda', label: t.nav.allShop },
+    ...categories.map((c) => ({
+      to: `/tienda/${c.id}`,
+      label: getCategoryLabel(c.id, locale),
+    })),
+  ]
 
   return (
     <header className={styles.header}>
@@ -22,27 +29,29 @@ export function Header() {
 
         <nav className={styles.nav} aria-label="Principal">
           <Link to="/tienda" className={styles.navLink}>
-            Tienda
+            {t.nav.shop}
           </Link>
           <Link to="/tienda/relojes" className={styles.navLink}>
-            Relojes
+            {t.nav.watches}
           </Link>
           <Link to="/tienda/gafas" className={styles.navLink}>
-            Gafas
+            {t.nav.glasses}
           </Link>
           <Link to="/tienda/ropa-urbana" className={styles.navLink}>
-            Ropa
+            {t.nav.clothing}
           </Link>
         </nav>
 
         <div className={styles.actions}>
+          <LocaleSwitcher />
+
           <button
             type="button"
             className={styles.menuBtn}
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
           >
             <span className={styles.menuBar} />
             <span className={styles.menuBar} />
@@ -52,7 +61,7 @@ export function Header() {
           <Link
             to="/carrito"
             className={styles.cartLink}
-            aria-label="Ver carrito"
+            aria-label={t.nav.cart}
             onClick={() => setMenuOpen(false)}
           >
             <svg

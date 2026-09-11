@@ -5,8 +5,10 @@ Tienda ecommerce de accesorios urbanos: relojes, gafas, carteras, correas y ropa
 ## Características
 
 - Catálogo por categorías con 16 productos de ejemplo
+- **Internacional:** idiomas ES/EN y monedas USD/EUR/COP
 - Carrito persistente en `localStorage`
-- Checkout simulado (sin pagos reales)
+- Checkout simulado con campo de país (sin pagos reales)
+- Envío internacional, SEO y Open Graph
 - Diseño responsive e intuitivo
 - Flujo de compra en 3 pasos: Elegir → Carrito → Confirmar
 

@@ -1,11 +1,6 @@
 import { useLocation } from 'react-router-dom'
+import { useLocale } from '../context/LocaleContext'
 import styles from './CheckoutSteps.module.css'
-
-const steps = [
-  { label: 'Elegir', paths: ['/', '/tienda', '/producto'] },
-  { label: 'Carrito', paths: ['/carrito'] },
-  { label: 'Confirmar', paths: ['/checkout', '/pedido-ok'] },
-]
 
 function getActiveStep(pathname: string): number {
   if (pathname.startsWith('/checkout') || pathname.startsWith('/pedido-ok')) {
@@ -19,18 +14,21 @@ function getActiveStep(pathname: string): number {
 
 export function CheckoutSteps() {
   const { pathname } = useLocation()
+  const { t } = useLocale()
   const active = getActiveStep(pathname)
+
+  const steps = [t.steps.choose, t.steps.cart, t.steps.confirm]
 
   return (
     <ol className={styles.steps} aria-label="Pasos de compra">
-      {steps.map((step, index) => (
+      {steps.map((label, index) => (
         <li
-          key={step.label}
+          key={label}
           className={`${styles.step} ${index <= active ? styles.active : ''} ${index === active ? styles.current : ''}`}
           aria-current={index === active ? 'step' : undefined}
         >
           <span className={styles.number}>{index + 1}</span>
-          <span className={styles.label}>{step.label}</span>
+          <span className={styles.label}>{label}</span>
         </li>
       ))}
     </ol>

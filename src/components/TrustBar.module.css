@@ -1,0 +1,35 @@
+.bar {
+  padding: var(--space-2xl) 0;
+  background: var(--color-bg-elevated);
+  border-block: 1px solid var(--color-border);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.item {
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: var(--space-xs);
+  color: var(--color-accent);
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2xl);
+  }
+}

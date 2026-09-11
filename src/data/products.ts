@@ -5,7 +5,7 @@ export const products: Product[] = [
     id: 'reloj-neon-pulse',
     name: 'Neon Pulse',
     category: 'relojes',
-    price: 189000,
+    priceUsd: 47,
     image:
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=80',
     description:
@@ -15,7 +15,7 @@ export const products: Product[] = [
     id: 'reloj-classic-steel',
     name: 'Classic Steel',
     category: 'relojes',
-    price: 245000,
+    priceUsd: 61,
     image:
       'https://images.unsplash.com/photo-1524593369004-842f27e85d21?w=900&q=80',
     description:
@@ -25,7 +25,7 @@ export const products: Product[] = [
     id: 'reloj-street-chrono',
     name: 'Street Chrono',
     category: 'relojes',
-    price: 312000,
+    priceUsd: 78,
     image:
       'https://images.unsplash.com/photo-1548171915-e79a380a9a4e?w=900&q=80',
     description:
@@ -35,7 +35,7 @@ export const products: Product[] = [
     id: 'gafas-urban-shade',
     name: 'Urban Shade',
     category: 'gafas',
-    price: 98000,
+    priceUsd: 25,
     image:
       'https://images.unsplash.com/photo-1577803643763-f2b2545982e2?w=900&q=80',
     description:
@@ -45,7 +45,7 @@ export const products: Product[] = [
     id: 'gafas-retro-gold',
     name: 'Retro Gold',
     category: 'gafas',
-    price: 125000,
+    priceUsd: 31,
     image:
       'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&q=80',
     description:
@@ -55,7 +55,7 @@ export const products: Product[] = [
     id: 'gafas-sport-flex',
     name: 'Sport Flex',
     category: 'gafas',
-    price: 87000,
+    priceUsd: 22,
     image:
       'https://images.unsplash.com/photo-1574258495973-f8dfdbccae6c?w=900&q=80',
     description:
@@ -65,7 +65,7 @@ export const products: Product[] = [
     id: 'cartera-slim-leather',
     name: 'Slim Leather',
     category: 'carteras',
-    price: 156000,
+    priceUsd: 39,
     image:
       'https://images.unsplash.com/photo-1627123424574-724758594e93?w=900&q=80',
     description:
@@ -75,7 +75,7 @@ export const products: Product[] = [
     id: 'cartera-zip-classic',
     name: 'Zip Classic',
     category: 'carteras',
-    price: 134000,
+    priceUsd: 34,
     image:
       'https://images.unsplash.com/photo-1606760227091-3dd870d1f56d?w=900&q=80',
     description:
@@ -85,7 +85,7 @@ export const products: Product[] = [
     id: 'cartera-card-holder',
     name: 'Card Holder',
     category: 'carteras',
-    price: 78000,
+    priceUsd: 20,
     image:
       'https://images.unsplash.com/photo-1620756308525-38d1fe8dcc76?w=900&q=80',
     description:
@@ -95,7 +95,7 @@ export const products: Product[] = [
     id: 'correa-canvas-street',
     name: 'Canvas Street',
     category: 'correas',
-    price: 89000,
+    priceUsd: 22,
     image:
       'https://images.unsplash.com/photo-1624222247344-550fb60583fd?w=900&q=80',
     description:
@@ -106,7 +106,7 @@ export const products: Product[] = [
     id: 'correa-leather-braided',
     name: 'Leather Braided',
     category: 'correas',
-    price: 112000,
+    priceUsd: 28,
     image:
       'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=900&q=80',
     description:
@@ -117,7 +117,7 @@ export const products: Product[] = [
     id: 'correa-chain-urban',
     name: 'Chain Urban',
     category: 'correas',
-    price: 95000,
+    priceUsd: 24,
     image:
       'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=900&q=80',
     description:
@@ -128,7 +128,7 @@ export const products: Product[] = [
     id: 'hoodie-latin-wave',
     name: 'Latin Wave Hoodie',
     category: 'ropa-urbana',
-    price: 198000,
+    priceUsd: 50,
     image:
       'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=900&q=80',
     description:
@@ -139,7 +139,7 @@ export const products: Product[] = [
     id: 'tee-street-vibes',
     name: 'Street Vibes Tee',
     category: 'ropa-urbana',
-    price: 89000,
+    priceUsd: 22,
     image:
       'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=900&q=80',
     description:
@@ -150,7 +150,7 @@ export const products: Product[] = [
     id: 'jacket-urban-wind',
     name: 'Urban Wind Jacket',
     category: 'ropa-urbana',
-    price: 267000,
+    priceUsd: 67,
     image:
       'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80',
     description:
@@ -161,12 +161,12 @@ export const products: Product[] = [
     id: 'cap-latin-logo',
     name: 'Latin Logo Cap',
     category: 'ropa-urbana',
-    price: 72000,
+    priceUsd: 18,
     image:
       'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=900&q=80',
     description:
       'Gorra ajustable con bordado 3D. El accesorio final para completar tu outfit.',
-    sizes: ['Única'],
+    sizes: ['Única', 'One size'],
   },
 ]
 

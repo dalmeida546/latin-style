@@ -1,3 +1,6 @@
+export type Locale = 'es' | 'en'
+export type Currency = 'USD' | 'EUR' | 'COP'
+
 export type Category =
   | 'relojes'
   | 'gafas'
@@ -9,7 +12,7 @@ export interface Product {
   id: string
   name: string
   category: Category
-  price: number
+  priceUsd: number
   image: string
   description: string
   sizes?: string[]
@@ -25,4 +28,5 @@ export interface CheckoutForm {
   name: string
   phone: string
   city: string
+  country: string
 }
