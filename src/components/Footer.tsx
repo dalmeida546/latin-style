@@ -24,6 +24,7 @@ export function Footer() {
               {getCategoryLabel(cat.id, locale)}
             </Link>
           ))}
+          <Link to="/admin">{t.footer.admin}</Link>
         </nav>
 
         <p className={styles.copy}>

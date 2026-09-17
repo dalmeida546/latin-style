@@ -98,6 +98,12 @@ h4 {
   background: var(--color-accent-hover);
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .btn-secondary {
   background: transparent;
   color: var(--color-text);

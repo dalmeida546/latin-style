@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom'
 import { CategoryNav } from '../components/CategoryNav'
 import { ProductCard } from '../components/ProductCard'
 import { TrustBar } from '../components/TrustBar'
-import { products } from '../data/products'
+import { useInventory } from '../context/InventoryContext'
 import { useLocale } from '../context/LocaleContext'
 import styles from './Home.module.css'
 
-const featured = products.slice(0, 4)
-
 export function Home() {
   const { t } = useLocale()
+  const { catalog } = useInventory()
+  const featured = catalog.slice(0, 4)
 
   return (
     <>

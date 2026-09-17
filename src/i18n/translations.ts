@@ -39,6 +39,14 @@ export type Translation = {
     back: string
     notFound: string
     backShop: string
+    stock: string
+    virtualStock: string
+    outOfStock: string
+    model: {
+      physical: string
+      virtual: string
+      both: string
+    }
   }
   cart: {
     title: string
@@ -65,18 +73,38 @@ export type Translation = {
     phone: string
     city: string
     country: string
+    document: string
+    email: string
     namePlaceholder: string
     phonePlaceholder: string
     cityPlaceholder: string
     countryPlaceholder: string
+    documentPlaceholder: string
+    emailPlaceholder: string
     order: string
     confirm: string
     note: string
+    payment: string
+    paymentMethods: {
+      cash: string
+      card: string
+      paypal: string
+      transfer: string
+    }
+    einvoice: string
+    einvoiceHint: string
+    includeInvoice: string
+    fiscalRequired: string
+    processing: string
+    stockError: string
     errors: {
       name: string
       phone: string
       city: string
       country: string
+      document: string
+      email: string
+      payment: string
     }
   }
   order: {
@@ -87,6 +115,53 @@ export type Translation = {
     note: string
     demo: string
     continue: string
+    viewInvoice: string
+    paymentRef: string
+  }
+  invoice: {
+    title: string
+    demoBadge: string
+    number: string
+    cufe: string
+    customer: string
+    document: string
+    payment: string
+    print: string
+    back: string
+    notFound: string
+    lines: string
+    total: string
+    issuedAt: string
+  }
+  admin: {
+    title: string
+    login: string
+    pin: string
+    pinHint: string
+    enter: string
+    logout: string
+    dashboard: string
+    products: string
+    inventory: string
+    invoices: string
+    todaySales: string
+    lowStock: string
+    invoicesIssued: string
+    save: string
+    sku: string
+    stock: string
+    model: string
+    eInvoiceEligible: string
+    active: string
+    threshold: string
+    adjust: string
+    reason: string
+    in: string
+    out: string
+    movements: string
+    noInvoices: string
+    view: string
+    price: string
   }
   steps: {
     choose: string
@@ -99,6 +174,7 @@ export type Translation = {
   footer: {
     tagline: string
     rights: string
+    admin: string
   }
   locale: {
     language: string
@@ -148,6 +224,14 @@ const es: Translation = {
     back: 'Seguir comprando',
     notFound: 'Producto no encontrado.',
     backShop: 'Volver a la tienda',
+    stock: 'Stock',
+    virtualStock: 'Producto virtual · stock ilimitado',
+    outOfStock: 'Sin stock',
+    model: {
+      physical: 'Físico',
+      virtual: 'Virtual',
+      both: 'Físico + Virtual',
+    },
   },
   cart: {
     title: 'Tu carrito',
@@ -168,24 +252,45 @@ const es: Translation = {
   },
   checkout: {
     title: 'Confirmar pedido',
-    subtitle: 'Completa tus datos. Es rápido y sencillo.',
+    subtitle: 'Completa tus datos, elige pago y decide qué facturar.',
     empty: 'No hay productos para pagar',
     name: 'Nombre completo',
     phone: 'Teléfono',
     city: 'Ciudad',
     country: 'País',
+    document: 'Documento / NIT',
+    email: 'Email',
     namePlaceholder: 'Tu nombre',
     phonePlaceholder: '+57 300 123 4567',
     cityPlaceholder: 'Tu ciudad',
     countryPlaceholder: 'Colombia, USA, España...',
+    documentPlaceholder: 'CC o NIT',
+    emailPlaceholder: 'correo@ejemplo.com',
     order: 'Tu pedido',
     confirm: 'Confirmar pedido',
-    note: 'Checkout de demostración. No se procesará ningún pago real.',
+    note: 'Pagos y facturación electrónica simulados. Listos para integrar datos reales.',
+    payment: 'Medio de pago',
+    paymentMethods: {
+      cash: 'Efectivo',
+      card: 'Tarjeta',
+      paypal: 'PayPal',
+      transfer: 'Transferencia',
+    },
+    einvoice: 'Facturación electrónica',
+    einvoiceHint:
+      'Elige qué productos incluir en la factura electrónica (demo DIAN-ready).',
+    includeInvoice: 'Incluir en FE',
+    fiscalRequired: 'Datos fiscales requeridos para emitir factura.',
+    processing: 'Procesando…',
+    stockError: 'Stock insuficiente para uno o más productos.',
     errors: {
       name: 'Escribe tu nombre',
       phone: 'Escribe tu teléfono',
       city: 'Escribe tu ciudad',
       country: 'Escribe tu país',
+      document: 'Escribe tu documento',
+      email: 'Escribe tu email',
+      payment: 'Elige un medio de pago',
     },
   },
   order: {
@@ -193,9 +298,57 @@ const es: Translation = {
     thanks: 'Gracias',
     registered: 'Tu pedido fue registrado correctamente.',
     orderId: 'Número de pedido',
-    note: 'Te contactaremos al teléfono que indicaste para coordinar la entrega internacional.',
-    demo: 'Recuerda: este es un checkout de demostración.',
+    note: 'Te contactaremos al teléfono que indicaste para coordinar la entrega.',
+    demo: 'Pagos y FE son de demostración, preparados para datos reales.',
     continue: 'Seguir comprando',
+    viewInvoice: 'Ver factura electrónica',
+    paymentRef: 'Referencia de pago',
+  },
+  invoice: {
+    title: 'Factura electrónica',
+    demoBadge:
+      'Factura electrónica de demostración — lista para integración DIAN',
+    number: 'Número',
+    cufe: 'CUFE',
+    customer: 'Cliente',
+    document: 'Documento',
+    payment: 'Pago',
+    print: 'Imprimir / PDF',
+    back: 'Volver',
+    notFound: 'Factura no encontrada.',
+    lines: 'Detalle',
+    total: 'Total',
+    issuedAt: 'Emitida',
+  },
+  admin: {
+    title: 'Panel LatinStyle',
+    login: 'Acceso admin',
+    pin: 'PIN',
+    pinHint: 'PIN demo: 1234',
+    enter: 'Entrar',
+    logout: 'Salir',
+    dashboard: 'Dashboard',
+    products: 'Productos',
+    inventory: 'Inventario',
+    invoices: 'Facturas',
+    todaySales: 'Ventas de hoy',
+    lowStock: 'Stock bajo',
+    invoicesIssued: 'Facturas emitidas',
+    save: 'Guardar',
+    sku: 'SKU',
+    stock: 'Stock',
+    model: 'Modelo',
+    eInvoiceEligible: 'Elegible FE',
+    active: 'Activo',
+    threshold: 'Umbral bajo',
+    adjust: 'Ajustar stock',
+    reason: 'Motivo',
+    in: 'Entrada',
+    out: 'Salida',
+    movements: 'Movimientos',
+    noInvoices: 'Aún no hay facturas.',
+    view: 'Ver',
+    price: 'Precio USD',
   },
   steps: {
     choose: 'Elegir',
@@ -208,12 +361,13 @@ const es: Translation = {
   footer: {
     tagline: 'Accesorios urbanos con actitud latina. Enviamos a todo el mundo.',
     rights: 'Todos los derechos reservados.',
+    admin: 'Admin',
   },
   locale: {
     language: 'Idioma',
     currency: 'Moneda',
   },
-} as const
+}
 
 const en: Translation = {
   nav: {
@@ -257,6 +411,14 @@ const en: Translation = {
     back: 'Continue shopping',
     notFound: 'Product not found.',
     backShop: 'Back to shop',
+    stock: 'Stock',
+    virtualStock: 'Virtual product · unlimited stock',
+    outOfStock: 'Out of stock',
+    model: {
+      physical: 'Physical',
+      virtual: 'Virtual',
+      both: 'Physical + Virtual',
+    },
   },
   cart: {
     title: 'Your cart',
@@ -277,24 +439,45 @@ const en: Translation = {
   },
   checkout: {
     title: 'Confirm order',
-    subtitle: 'Fill in your details. Quick and simple.',
+    subtitle: 'Fill in your details, choose payment and what to invoice.',
     empty: 'No items to checkout',
     name: 'Full name',
     phone: 'Phone',
     city: 'City',
     country: 'Country',
+    document: 'ID / Tax ID',
+    email: 'Email',
     namePlaceholder: 'Your name',
     phonePlaceholder: '+1 555 123 4567',
     cityPlaceholder: 'Your city',
     countryPlaceholder: 'USA, Colombia, Spain...',
+    documentPlaceholder: 'ID or Tax ID',
+    emailPlaceholder: 'email@example.com',
     order: 'Your order',
     confirm: 'Place order',
-    note: 'Demo checkout. No real payment will be processed.',
+    note: 'Payments and e-invoicing are simulated. Ready for real integrations.',
+    payment: 'Payment method',
+    paymentMethods: {
+      cash: 'Cash',
+      card: 'Card',
+      paypal: 'PayPal',
+      transfer: 'Bank transfer',
+    },
+    einvoice: 'Electronic invoice',
+    einvoiceHint:
+      'Choose which products to include in the e-invoice (DIAN-ready demo).',
+    includeInvoice: 'Include in e-invoice',
+    fiscalRequired: 'Tax details required to issue an invoice.',
+    processing: 'Processing…',
+    stockError: 'Insufficient stock for one or more products.',
     errors: {
       name: 'Enter your name',
       phone: 'Enter your phone',
       city: 'Enter your city',
       country: 'Enter your country',
+      document: 'Enter your document',
+      email: 'Enter your email',
+      payment: 'Choose a payment method',
     },
   },
   order: {
@@ -302,9 +485,56 @@ const en: Translation = {
     thanks: 'Thank you',
     registered: 'Your order was placed successfully.',
     orderId: 'Order number',
-    note: 'We will contact you by phone to coordinate international delivery.',
-    demo: 'Remember: this is a demo checkout.',
+    note: 'We will contact you by phone to coordinate delivery.',
+    demo: 'Payments and e-invoicing are demo, ready for real data.',
     continue: 'Continue shopping',
+    viewInvoice: 'View electronic invoice',
+    paymentRef: 'Payment reference',
+  },
+  invoice: {
+    title: 'Electronic invoice',
+    demoBadge: 'Demo electronic invoice — ready for DIAN integration',
+    number: 'Number',
+    cufe: 'CUFE',
+    customer: 'Customer',
+    document: 'Document',
+    payment: 'Payment',
+    print: 'Print / PDF',
+    back: 'Back',
+    notFound: 'Invoice not found.',
+    lines: 'Details',
+    total: 'Total',
+    issuedAt: 'Issued',
+  },
+  admin: {
+    title: 'LatinStyle Admin',
+    login: 'Admin access',
+    pin: 'PIN',
+    pinHint: 'Demo PIN: 1234',
+    enter: 'Sign in',
+    logout: 'Sign out',
+    dashboard: 'Dashboard',
+    products: 'Products',
+    inventory: 'Inventory',
+    invoices: 'Invoices',
+    todaySales: 'Today sales',
+    lowStock: 'Low stock',
+    invoicesIssued: 'Invoices issued',
+    save: 'Save',
+    sku: 'SKU',
+    stock: 'Stock',
+    model: 'Model',
+    eInvoiceEligible: 'E-invoice eligible',
+    active: 'Active',
+    threshold: 'Low threshold',
+    adjust: 'Adjust stock',
+    reason: 'Reason',
+    in: 'In',
+    out: 'Out',
+    movements: 'Movements',
+    noInvoices: 'No invoices yet.',
+    view: 'View',
+    price: 'Price USD',
   },
   steps: {
     choose: 'Choose',
@@ -317,6 +547,7 @@ const en: Translation = {
   footer: {
     tagline: 'Urban accessories with Latin attitude. We ship worldwide.',
     rights: 'All rights reserved.',
+    admin: 'Admin',
   },
   locale: {
     language: 'Language',
@@ -324,5 +555,4 @@ const en: Translation = {
   },
 }
 
-export const translations = { es, en } as const
-export type TranslationKey = keyof typeof es
+export const translations = { es, en }

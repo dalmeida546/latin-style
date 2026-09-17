@@ -1,6 +1,6 @@
 import type { Category, Product } from '../types'
 
-export const products: Product[] = [
+export const seedProducts: Product[] = [
   {
     id: 'reloj-neon-pulse',
     name: 'Neon Pulse',
@@ -10,6 +10,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=80',
     description:
       'Reloj digital con correa de silicona y pantalla LED. Resistente al agua, perfecto para la calle.',
+    sku: 'LS-REL-001',
+    businessModel: 'both',
+    stock: 24,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 5,
   },
   {
     id: 'reloj-classic-steel',
@@ -20,6 +26,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1524593369004-842f27e85d21?w=900&q=80',
     description:
       'Caja de acero inoxidable con cristal mineral. Elegancia urbana para el día a día.',
+    sku: 'LS-REL-002',
+    businessModel: 'physical',
+    stock: 12,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 4,
   },
   {
     id: 'reloj-street-chrono',
@@ -30,6 +42,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1548171915-e79a380a9a4e?w=900&q=80',
     description:
       'Cronógrafo deportivo con triple subesfera. Actitud y precisión en tu muñeca.',
+    sku: 'LS-REL-003',
+    businessModel: 'both',
+    stock: 8,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 3,
   },
   {
     id: 'gafas-urban-shade',
@@ -40,6 +58,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1577803643763-f2b2545982e2?w=900&q=80',
     description:
       'Montura negra mate con lentes polarizados. Protección UV400 para días soleados.',
+    sku: 'LS-GAF-001',
+    businessModel: 'both',
+    stock: 40,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 8,
   },
   {
     id: 'gafas-retro-gold',
@@ -50,6 +74,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&q=80',
     description:
       'Marco dorado vintage con lentes degradados. El clásico que nunca pasa de moda.',
+    sku: 'LS-GAF-002',
+    businessModel: 'physical',
+    stock: 15,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 5,
   },
   {
     id: 'gafas-sport-flex',
@@ -60,6 +90,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1574258495973-f8dfdbccae6c?w=900&q=80',
     description:
       'Diseño envolvente flexible. Ideales para moverte con estilo y comodidad.',
+    sku: 'LS-GAF-003',
+    businessModel: 'both',
+    stock: 30,
+    requiresEInvoice: false,
+    active: true,
+    lowStockThreshold: 6,
   },
   {
     id: 'cartera-slim-leather',
@@ -70,6 +106,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1627123424574-724758594e93?w=900&q=80',
     description:
       'Cuero genuino con compartimentos para tarjetas y billetes. Delgada y práctica.',
+    sku: 'LS-CAR-001',
+    businessModel: 'physical',
+    stock: 18,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 4,
   },
   {
     id: 'cartera-zip-classic',
@@ -80,6 +122,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1606760227091-3dd870d1f56d?w=900&q=80',
     description:
       'Cierre con cremallera y múltiples bolsillos. Todo organizado en un solo lugar.',
+    sku: 'LS-CAR-002',
+    businessModel: 'both',
+    stock: 22,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 5,
   },
   {
     id: 'cartera-card-holder',
@@ -90,6 +138,12 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1620756308525-38d1fe8dcc76?w=900&q=80',
     description:
       'Portatarjetas minimalista de piel. Cabe en cualquier bolsillo sin volumen.',
+    sku: 'LS-CAR-003',
+    businessModel: 'virtual',
+    stock: 0,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 0,
   },
   {
     id: 'correa-canvas-street',
@@ -101,6 +155,12 @@ export const products: Product[] = [
     description:
       'Correa de lona reforzada con hebilla metálica. Ajustable y resistente.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-COR-001',
+    businessModel: 'physical',
+    stock: 35,
+    requiresEInvoice: false,
+    active: true,
+    lowStockThreshold: 7,
   },
   {
     id: 'correa-leather-braided',
@@ -112,6 +172,12 @@ export const products: Product[] = [
     description:
       'Cuero trenzado artesanal con acabado premium. El detalle que marca la diferencia.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-COR-002',
+    businessModel: 'both',
+    stock: 16,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 4,
   },
   {
     id: 'correa-chain-urban',
@@ -123,6 +189,12 @@ export const products: Product[] = [
     description:
       'Cadena metálica con cierre de seguridad. Estilo industrial para looks audaces.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-COR-003',
+    businessModel: 'virtual',
+    stock: 0,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 0,
   },
   {
     id: 'hoodie-latin-wave',
@@ -134,6 +206,12 @@ export const products: Product[] = [
     description:
       'Sudadera oversize con capucha y logo bordado. Algodón premium, máximo confort.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-ROP-001',
+    businessModel: 'physical',
+    stock: 20,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 5,
   },
   {
     id: 'tee-street-vibes',
@@ -145,6 +223,12 @@ export const products: Product[] = [
     description:
       'Camiseta gráfica de algodón peinado. Print exclusivo LatinStyle en el pecho.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-ROP-002',
+    businessModel: 'both',
+    stock: 45,
+    requiresEInvoice: false,
+    active: true,
+    lowStockThreshold: 10,
   },
   {
     id: 'jacket-urban-wind',
@@ -156,6 +240,12 @@ export const products: Product[] = [
     description:
       'Chaqueta cortavientos ligera con bolsillos ocultos. Lista para cualquier clima.',
     sizes: ['S', 'M', 'L', 'XL'],
+    sku: 'LS-ROP-003',
+    businessModel: 'physical',
+    stock: 10,
+    requiresEInvoice: true,
+    active: true,
+    lowStockThreshold: 3,
   },
   {
     id: 'cap-latin-logo',
@@ -167,15 +257,24 @@ export const products: Product[] = [
     description:
       'Gorra ajustable con bordado 3D. El accesorio final para completar tu outfit.',
     sizes: ['Única', 'One size'],
+    sku: 'LS-ROP-004',
+    businessModel: 'both',
+    stock: 50,
+    requiresEInvoice: false,
+    active: true,
+    lowStockThreshold: 10,
   },
 ]
 
+/** @deprecated use InventoryContext — kept for seed helpers */
+export const products = seedProducts
+
 export function getProductById(id: string): Product | undefined {
-  return products.find((product) => product.id === id)
+  return seedProducts.find((product) => product.id === id)
 }
 
 export function getProductsByCategory(category: Category): Product[] {
-  return products.filter((product) => product.category === category)
+  return seedProducts.filter((product) => product.category === category)
 }
 
 export function isValidCategory(value: string): value is Category {

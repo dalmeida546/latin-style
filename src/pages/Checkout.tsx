@@ -1,15 +1,23 @@
-import { useState, type FormEvent } from 'react'
+import { useMemo, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CheckoutSteps } from '../components/CheckoutSteps'
 import { getProductName } from '../i18n/products'
 import { useCart } from '../context/CartContext'
+import { useInventory } from '../context/InventoryContext'
 import { useLocale } from '../context/LocaleContext'
-import type { CheckoutForm } from '../types'
+import { useSales } from '../context/SalesContext'
+import { canSell } from '../services/inventoryService'
+import { processPayment } from '../services/paymentService'
+import type { CheckoutForm, PaymentMethod, SaleLine } from '../types'
 import { formatPrice } from '../utils/format'
 import styles from './Checkout.module.css'
 
+const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'card', 'paypal', 'transfer']
+
 export function Checkout() {
   const { items, total, clearCart } = useCart()
+  const { getProduct, deductSale } = useInventory()
+  const { recordSale } = useSales()
   const { t, locale, currency } = useLocale()
   const navigate = useNavigate()
 
@@ -18,8 +26,28 @@ export function Checkout() {
     phone: '',
     city: '',
     country: '',
+    document: '',
+    email: '',
   })
-  const [errors, setErrors] = useState<Partial<CheckoutForm>>({})
+  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutForm | 'payment', string>>>({})
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null)
+  const [invoiceSelected, setInvoiceSelected] = useState<Record<string, boolean>>(
+    () => {
+      const initial: Record<string, boolean> = {}
+      for (const item of items) {
+        const key = `${item.product.id}-${item.selectedSize ?? 'default'}`
+        initial[key] = item.product.requiresEInvoice
+      }
+      return initial
+    },
+  )
+  const [submitting, setSubmitting] = useState(false)
+  const [stockError, setStockError] = useState(false)
+
+  const hasInvoiceSelection = useMemo(
+    () => Object.values(invoiceSelected).some(Boolean),
+    [invoiceSelected],
+  )
 
   if (items.length === 0) {
     return (
@@ -36,22 +64,79 @@ export function Checkout() {
   }
 
   const validate = (): boolean => {
-    const next: Partial<CheckoutForm> = {}
+    const next: Partial<Record<keyof CheckoutForm | 'payment', string>> = {}
     if (!form.name.trim()) next.name = t.checkout.errors.name
     if (!form.phone.trim()) next.phone = t.checkout.errors.phone
     if (!form.city.trim()) next.city = t.checkout.errors.city
     if (!form.country.trim()) next.country = t.checkout.errors.country
+    if (!paymentMethod) next.payment = t.checkout.errors.payment
+    if (hasInvoiceSelection) {
+      if (!form.document?.trim()) next.document = t.checkout.errors.document
+      if (!form.email?.trim()) next.email = t.checkout.errors.email
+    }
     setErrors(next)
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (!validate()) return
+    setStockError(false)
+    if (!validate() || !paymentMethod) return
 
-    sessionStorage.setItem('latinstyle-checkout-data', JSON.stringify(form))
-    clearCart()
-    navigate('/pedido-ok')
+    for (const item of items) {
+      const live = getProduct(item.product.id)
+      if (!live || !canSell(live, item.quantity, 'online')) {
+        setStockError(true)
+        return
+      }
+    }
+
+    setSubmitting(true)
+    try {
+      const payment = await processPayment(paymentMethod, total)
+      if (!payment.ok) {
+        setSubmitting(false)
+        return
+      }
+
+      const lines: SaleLine[] = items.map((item) => {
+        const key = `${item.product.id}-${item.selectedSize ?? 'default'}`
+        return {
+          productId: item.product.id,
+          name: getProductName(item.product.id, locale, item.product.name),
+          sku: item.product.sku,
+          quantity: item.quantity,
+          priceUsd: item.product.priceUsd,
+          selectedSize: item.selectedSize,
+          invoiceSelected: Boolean(invoiceSelected[key]),
+        }
+      })
+
+      deductSale(lines.map((l) => ({ productId: l.productId, quantity: l.quantity })))
+
+      const sale = recordSale({
+        customer: form,
+        paymentMethod,
+        paymentRef: payment.reference,
+        channel: 'online',
+        currency,
+        lines,
+      })
+
+      sessionStorage.setItem(
+        'latinstyle-checkout-data',
+        JSON.stringify({
+          ...form,
+          saleId: sale.id,
+          paymentRef: payment.reference,
+          hasInvoice: Boolean(sale.eInvoice),
+        }),
+      )
+      clearCart()
+      navigate('/pedido-ok')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -73,9 +158,7 @@ export function Checkout() {
               placeholder={t.checkout.namePlaceholder}
               autoComplete="name"
             />
-            {errors.name && (
-              <span className={styles.error}>{errors.name}</span>
-            )}
+            {errors.name && <span className={styles.error}>{errors.name}</span>}
           </div>
 
           <div className={styles.field}>
@@ -103,9 +186,7 @@ export function Checkout() {
               placeholder={t.checkout.cityPlaceholder}
               autoComplete="address-level2"
             />
-            {errors.city && (
-              <span className={styles.error}>{errors.city}</span>
-            )}
+            {errors.city && <span className={styles.error}>{errors.city}</span>}
           </div>
 
           <div className={styles.field}>
@@ -123,8 +204,117 @@ export function Checkout() {
             )}
           </div>
 
-          <button type="submit" className="btn btn-primary btn-full">
-            {t.checkout.confirm}
+          <fieldset className={styles.fieldset}>
+            <legend>{t.checkout.payment}</legend>
+            <div className={styles.paymentGrid}>
+              {PAYMENT_METHODS.map((method) => (
+                <label
+                  key={method}
+                  className={`${styles.payOption} ${paymentMethod === method ? styles.payActive : ''}`}
+                >
+                  <input
+                    type="radio"
+                    name="payment"
+                    value={method}
+                    checked={paymentMethod === method}
+                    onChange={() => setPaymentMethod(method)}
+                  />
+                  {t.checkout.paymentMethods[method]}
+                </label>
+              ))}
+            </div>
+            {errors.payment && (
+              <span className={styles.error}>{errors.payment}</span>
+            )}
+          </fieldset>
+
+          <fieldset className={styles.fieldset}>
+            <legend>{t.checkout.einvoice}</legend>
+            <p className={styles.hint}>{t.checkout.einvoiceHint}</p>
+            <ul className={styles.invoiceList}>
+              {items.map((item) => {
+                const key = `${item.product.id}-${item.selectedSize ?? 'default'}`
+                const name = getProductName(
+                  item.product.id,
+                  locale,
+                  item.product.name,
+                )
+                return (
+                  <li key={key}>
+                    <label className={styles.invoiceItem}>
+                        <input
+                          type="checkbox"
+                          checked={Boolean(invoiceSelected[key])}
+                          onChange={(e) =>
+                            setInvoiceSelected((current) => ({
+                              ...current,
+                              [key]: e.target.checked,
+                            }))
+                          }
+                        />
+                        <span>
+                          {name}
+                          {item.selectedSize ? ` (${item.selectedSize})` : ''} ×{' '}
+                          {item.quantity}
+                          {item.product.requiresEInvoice && (
+                            <em className={styles.optional}> · FE</em>
+                          )}
+                        </span>
+                      <span>{t.checkout.includeInvoice}</span>
+                    </label>
+                  </li>
+                )
+              })}
+            </ul>
+
+            {hasInvoiceSelection && (
+              <>
+                <p className={styles.hint}>{t.checkout.fiscalRequired}</p>
+                <div className={styles.field}>
+                  <label htmlFor="document">{t.checkout.document}</label>
+                  <input
+                    id="document"
+                    type="text"
+                    value={form.document ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, document: e.target.value })
+                    }
+                    placeholder={t.checkout.documentPlaceholder}
+                  />
+                  {errors.document && (
+                    <span className={styles.error}>{errors.document}</span>
+                  )}
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="email">{t.checkout.email}</label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={form.email ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                    placeholder={t.checkout.emailPlaceholder}
+                    autoComplete="email"
+                  />
+                  {errors.email && (
+                    <span className={styles.error}>{errors.email}</span>
+                  )}
+                </div>
+              </>
+            )}
+          </fieldset>
+
+          {stockError && (
+            <p className={styles.error}>{t.checkout.stockError}</p>
+          )}
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-full"
+            disabled={submitting}
+          >
+            {submitting ? t.checkout.processing : t.checkout.confirm}
           </button>
         </form>
 

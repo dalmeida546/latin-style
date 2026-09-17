@@ -5,6 +5,7 @@ import type { Product } from '../types'
 import { formatPrice } from '../utils/format'
 import { useCart } from '../context/CartContext'
 import { useLocale } from '../context/LocaleContext'
+import { canSell } from '../services/inventoryService'
 import styles from './ProductCard.module.css'
 
 interface ProductCardProps {
@@ -16,6 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { locale, currency, t } = useLocale()
 
   const name = getProductName(product.id, locale, product.name)
+  const available = canSell(product, 1, 'online')
 
   return (
     <article className={styles.card}>
@@ -30,7 +32,8 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className={styles.body}>
         <span className={styles.category}>
-          {getCategoryLabel(product.category, locale)}
+          {getCategoryLabel(product.category, locale)} ·{' '}
+          {t.product.model[product.businessModel]}
         </span>
         <Link to={`/producto/${product.id}`} className={styles.name}>
           <h3>{name}</h3>
@@ -43,8 +46,9 @@ export function ProductCard({ product }: ProductCardProps) {
           type="button"
           className={`btn btn-primary btn-full ${styles.addBtn}`}
           onClick={() => addItem(product)}
+          disabled={!available}
         >
-          {t.card.add}
+          {available ? t.card.add : t.product.outOfStock}
         </button>
       </div>
     </article>

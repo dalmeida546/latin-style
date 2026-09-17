@@ -2,19 +2,17 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckoutSteps } from '../components/CheckoutSteps'
 import { useLocale } from '../context/LocaleContext'
-import { generateOrderId } from '../utils/format'
 import styles from './OrderOk.module.css'
 
 interface OrderData {
   name: string
-  phone: string
-  city: string
-  country: string
+  saleId?: string
+  paymentRef?: string
+  hasInvoice?: boolean
 }
 
 export function OrderOk() {
   const { t } = useLocale()
-  const [orderId, setOrderId] = useState('')
   const [customer, setCustomer] = useState<OrderData | null>(null)
 
   useEffect(() => {
@@ -24,8 +22,6 @@ export function OrderOk() {
       setCustomer(data)
       sessionStorage.removeItem('latinstyle-checkout-data')
     }
-
-    setOrderId(generateOrderId())
   }, [])
 
   return (
@@ -52,9 +48,15 @@ export function OrderOk() {
           {customer?.name ? `, ${customer.name}` : ''}. {t.order.registered}
         </p>
 
-        {orderId && (
+        {customer?.saleId && (
           <p className={styles.orderId}>
-            {t.order.orderId}: <strong>{orderId}</strong>
+            {t.order.orderId}: <strong>{customer.saleId}</strong>
+          </p>
+        )}
+
+        {customer?.paymentRef && (
+          <p className={styles.orderId}>
+            {t.order.paymentRef}: <strong>{customer.paymentRef}</strong>
           </p>
         )}
 
@@ -62,9 +64,19 @@ export function OrderOk() {
           {t.order.note} {t.order.demo}
         </p>
 
-        <Link to="/tienda" className={`btn btn-primary ${styles.cta}`}>
-          {t.order.continue}
-        </Link>
+        <div className={styles.actions}>
+          {customer?.hasInvoice && customer.saleId && (
+            <Link
+              to={`/factura/${customer.saleId}`}
+              className={`btn btn-primary ${styles.cta}`}
+            >
+              {t.order.viewInvoice}
+            </Link>
+          )}
+          <Link to="/tienda" className={`btn btn-secondary ${styles.cta}`}>
+            {t.order.continue}
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -52,6 +52,12 @@
   line-height: 1.7;
 }
 
+.stockMeta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-steel);
+}
+
 .sizesLabel {
   display: block;
   font-size: 0.85rem;

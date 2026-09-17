@@ -5,12 +5,23 @@ Tienda ecommerce de accesorios urbanos: relojes, gafas, carteras, correas y ropa
 ## Características
 
 - Catálogo por categorías con 16 productos de ejemplo
+- **Inventario** físico / virtual / ambos (stock, SKU, umbral bajo)
+- **Panel admin** en `/admin` (PIN demo: `1234`)
+- **Medios de pago simulados:** efectivo, tarjeta, PayPal, transferencia
+- **Facturación electrónica simulada** por producto (CUFE demo, lista para DIAN)
 - **Internacional:** idiomas ES/EN y monedas USD/EUR/COP
 - Carrito persistente en `localStorage`
-- Checkout simulado con campo de país (sin pagos reales)
-- Envío internacional, SEO y Open Graph
 - Diseño responsive e intuitivo
 - Flujo de compra en 3 pasos: Elegir → Carrito → Confirmar
+
+### Admin
+
+1. Ir a `/admin`
+2. PIN: `1234`
+3. Gestionar productos, stock, movimientos y facturas emitidas
+
+Los servicios en `src/services/` están listos para reemplazar `localStorage` por API real (DIAN / Stripe / PayPal).
+
 
 ## Desarrollo local
 

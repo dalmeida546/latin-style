@@ -2,19 +2,21 @@ import { useParams, Link } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
 import { CheckoutSteps } from '../components/CheckoutSteps'
 import { categories } from '../data/categories'
-import { products, isValidCategory } from '../data/products'
+import { isValidCategory } from '../data/products'
 import { getCategoryLabel } from '../i18n/categories'
+import { useInventory } from '../context/InventoryContext'
 import { useLocale } from '../context/LocaleContext'
 import styles from './Shop.module.css'
 
 export function Shop() {
   const { categoria } = useParams()
   const { t, locale } = useLocale()
+  const { catalog } = useInventory()
   const validCategory = categoria && isValidCategory(categoria) ? categoria : null
 
   const filtered = validCategory
-    ? products.filter((p) => p.category === validCategory)
-    : products
+    ? catalog.filter((p) => p.category === validCategory)
+    : catalog
 
   const title = validCategory
     ? getCategoryLabel(validCategory, locale)

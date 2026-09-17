@@ -1,0 +1,129 @@
+.page {
+  padding: var(--space-xl) 0 var(--space-4xl);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.back {
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.doc {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+  background: #f7f7f4;
+  color: #121212;
+  border-radius: var(--radius-md);
+  animation: fadeUp 400ms ease;
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #c8f542;
+  border-radius: var(--radius-sm);
+}
+
+.docHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 2px solid #121212;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.brand span {
+  color: #6b8f00;
+}
+
+.docHeader h1 {
+  font-size: 1.25rem;
+  margin-top: var(--space-xs);
+}
+
+.meta {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.section {
+  margin-bottom: var(--space-xl);
+}
+
+.section h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-sm);
+  color: #555;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.footerRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 2px solid #121212;
+}
+
+.cufe {
+  margin-top: var(--space-sm);
+  font-size: 0.75rem;
+  word-break: break-all;
+  max-width: 40ch;
+}
+
+.total {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+@media print {
+  .toolbar {
+    display: none;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .doc {
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

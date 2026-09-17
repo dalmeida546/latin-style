@@ -6,9 +6,10 @@ import {
   getProductDescription,
   getProductName,
 } from '../i18n/products'
-import { getProductById } from '../data/products'
 import { useCart } from '../context/CartContext'
+import { useInventory } from '../context/InventoryContext'
 import { useLocale } from '../context/LocaleContext'
+import { canSell } from '../services/inventoryService'
 import { formatPrice } from '../utils/format'
 import styles from './Product.module.css'
 
@@ -16,15 +17,16 @@ export function Product() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addItem } = useCart()
+  const { getProduct } = useInventory()
   const { t, locale, currency } = useLocale()
-  const product = id ? getProductById(id) : undefined
+  const product = id ? getProduct(id) : undefined
 
   const [selectedSize, setSelectedSize] = useState<string | undefined>(
     product?.sizes?.[0],
   )
   const [added, setAdded] = useState(false)
 
-  if (!product) {
+  if (!product || !product.active) {
     return (
       <div className={`container ${styles.page}`}>
         <p className={styles.notFound}>{t.product.notFound}</p>
@@ -41,8 +43,14 @@ export function Product() {
     locale,
     product.description,
   )
+  const available = canSell(product, 1, 'online')
+  const stockLabel =
+    product.businessModel === 'virtual'
+      ? t.product.virtualStock
+      : `${t.product.stock}: ${product.stock}`
 
   const handleAdd = () => {
+    if (!available) return
     if (product.sizes && !selectedSize) return
     addItem(product, 1, selectedSize)
     setAdded(true)
@@ -50,6 +58,7 @@ export function Product() {
   }
 
   const handleBuyNow = () => {
+    if (!available) return
     if (product.sizes && !selectedSize) return
     addItem(product, 1, selectedSize)
     navigate('/carrito')
@@ -66,13 +75,16 @@ export function Product() {
 
         <div className={styles.info}>
           <span className={styles.category}>
-            {getCategoryLabel(product.category, locale)}
+            {getCategoryLabel(product.category, locale)} · {product.sku}
           </span>
           <h1 className={styles.name}>{name}</h1>
           <p className={styles.price}>
             {formatPrice(product.priceUsd, currency, locale)}
           </p>
           <p className={styles.description}>{description}</p>
+          <p className={styles.stockMeta}>
+            {stockLabel} · {t.product.model[product.businessModel]}
+          </p>
 
           {product.sizes && (
             <div className={styles.sizes}>
@@ -100,13 +112,19 @@ export function Product() {
               type="button"
               className={`btn btn-primary btn-full ${styles.addBtn}`}
               onClick={handleAdd}
+              disabled={!available}
             >
-              {added ? t.product.added : t.product.add}
+              {!available
+                ? t.product.outOfStock
+                : added
+                  ? t.product.added
+                  : t.product.add}
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-full"
               onClick={handleBuyNow}
+              disabled={!available}
             >
               {t.product.buyNow}
             </button>
